@@ -72,17 +72,13 @@ extern "C" {
 
 typedef const void *MSImageRef;
 
-MSImageRef MSGetImageByName(const char *file)
-__asm__("SubGetImageByName");
-void *MSFindSymbol(MSImageRef image, const char *name)
-__asm__("SubFindSymbol");
+MSImageRef MSGetImageByName(const char *file);
+void *MSFindSymbol(MSImageRef image, const char *name);
 
-void MSHookFunction(void *symbol, void *replace, void **result)
-__asm__("SubHookFunction");
+void MSHookFunction(void *symbol, void *replace, void **result);
 
 #ifdef __APPLE__
-void MSHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result)
-__asm__("SubHookMessageEx");
+void MSHookMessageEx(Class _class, SEL sel, IMP imp, IMP *result);
 #endif
 
 #ifdef __cplusplus
