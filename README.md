@@ -1,13 +1,14 @@
 # 花火 适配Xcode 14.0 和Apple Silicon Mac
 libsubstitute改为静态库形式使用，编译自[https://github.com/PoomSmart/substitute](https://github.com/PoomSmart/substitute)，编译了arm64和x86_64两种架构
 
-增加了LLVM New Pass Manager的Hook
+增加了New Pass Manager的Hook
 
-LLVM的pass请看[https://github.com/NeHyci/Hikari-LLVM15](https://github.com/NeHyci/Hikari-LLVM15)，移植到swift llvm 5.7再配合这个仓库编译
+LLVM Pass可以从[https://github.com/NeHyci/Hikari-LLVM15](https://github.com/NeHyci/Hikari-LLVM15)获取，移植到[swift llvm 5.7](https://github.com/apple/llvm-project/tree/swift/release/5.7)再配合这个仓库编译即可
 
 # 花火
 Hassle-free Obfuscator-Enabled Apple Clang without any sort of compromise.
-![](https://github.com/HikariObfuscator/NatsukoiHanabi/blob/master/Demo.jpg?raw=true)
+
+![Demo](https://github.com/HikariObfuscator/Hanabi/blob/master/Demo.jpg?raw=true)
 
 # License
 Please refer to [License](https://github.com/HikariObfuscator/Hikari/wiki/License).
@@ -22,7 +23,7 @@ Due to its hackish nature (Which is why I don't want to do this in the first pla
 - ``${LLVM_BUILD_PATH}`` The path you prepare to build in. Note that you need a seperate folder and must not reuse existing build for upstream Hikari
 
 ## Obtaining Source
-- ``git clone https://github.com/HikariObfuscator/Hanabi.git $(LLVM_SOURCE_PATH)/projects/``
+- ``git clone https://github.com/NeHyci/Hanabi.git $(LLVM_SOURCE_PATH)/projects/``
 - Under ``$(LLVM_SOURCE_PATH)``, run ``git submodule update --init --recursive --remote`` to make sure submodules are fully updated
 
 ## Build
@@ -42,15 +43,12 @@ You need to build ``https://github.com/alexzielenski/optool`` and put it in your
 - ``sudo codesign -fs - /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang``
 - ``sudo codesign -fs - /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend``
 
-# Known Issues
-- LLVM 6.0.1 (which Xcode 10.1 and before is using) has bugs related to ``indirectbr`` CodeGeneration, you might get a crash if you enable ``INDIBRAN``. Try updating your Xcode version
-
 
 # How it works
 - Strictly speaking, many changes are done to the Hikari Core to reduce LLVM library dependencies.
 - Loader's linking options is modified to link to no LLVM library and fully resolve them at runtime in a flat namespace, this loader is also known as ``libLLVMHanabi.dylib``
 - Then, we ship a custom mimimal subset of LLVM Core Libraries which serves as the fallback plan for symbols that are not exported in Apple's binaries, this is known as ``libLLVMHanabiDeps.dylib``.
-- By not linking the full LLVM suite, we are allowed to reduce build time and more importantly, allows us to pass arguments like we normally would. (``-mllvm``)
+- By not linking the full LLVM suite, we are allowed to reduce build time and more importantly, allows us to pass arguments like we normally would. (``-mllvm`` and ``-Xllvm``)
 
 
 # Credits
