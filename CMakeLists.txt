@@ -7,6 +7,10 @@ add_dependencies(LLVMHanabiDeps
   LLVMSupport
   LLVMPasses
 )
+
+set(CMAKE_INSTALL_RPATH "@loader_path/")
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+
 add_library(LLVMHanabi SHARED
   ${CMAKE_CURRENT_LIST_DIR}/Loader.cpp
 )
