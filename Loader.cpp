@@ -18,35 +18,16 @@ static void new_pmb(void* dis,legacy::PassManagerBase &MPM){
   MPM.add(createObfuscationLegacyPass());
   old_pmb(dis,MPM);
 }
-ModulePassManager (*old_bo0dp)(OptimizationLevel Level, bool LTOPreLink);
-static ModulePassManager new_bo0dp(OptimizationLevel Level, bool LTOPreLink) {
-  ModulePassManager MPM = old_bo0dp(Level, LTOPreLink);
+
+static ModulePassManager buildObfuscationPipeline(void) {
+  ModulePassManager MPM;
   MPM.addPass(ObfuscationPass());
   return MPM;
 }
-ModulePassManager (*old_bpmdp)(OptimizationLevel Level, bool LTOPreLink);
-static ModulePassManager new_bpmdp(OptimizationLevel Level, bool LTOPreLink) {
-  ModulePassManager MPM = old_bpmdp(Level, LTOPreLink);
-  MPM.addPass(ObfuscationPass());
-  return MPM;
-}
-ModulePassManager (*old_btlpldp)(OptimizationLevel Level);
-static ModulePassManager new_btlpldp(OptimizationLevel Level) {
-  ModulePassManager MPM = old_btlpldp(Level);
-  MPM.addPass(ObfuscationPass());
-  return MPM;
-}
-ModulePassManager (*old_btldp)(OptimizationLevel Level, void *ImportSummary);
-static ModulePassManager new_btldp(OptimizationLevel Level, void *ImportSummary) {
-  ModulePassManager MPM = old_btldp(Level, ImportSummary);
-  MPM.addPass(ObfuscationPass());
-  return MPM;
-}
-ModulePassManager (*old_bldp)(OptimizationLevel Level, void *ImportSummary);
-static ModulePassManager new_bldp(OptimizationLevel Level, void *ImportSummary) {
-  ModulePassManager MPM = old_bldp(Level, ImportSummary);
-  MPM.addPass(ObfuscationPass());
-  return MPM;
+Error (*old_pmp)(ModulePassManager &MPM, int E);
+static Error new_pmp(ModulePassManager &MPM, int E) {
+  MPM.addPass(buildObfuscationPipeline());
+  return old_pmp(MPM, E);
 }
 
 static __attribute__((__constructor__)) void Inj3c73d(int argc, char* argv[]){
@@ -58,9 +39,5 @@ static __attribute__((__constructor__)) void Inj3c73d(int argc, char* argv[]){
   else
     errs() << "Applying Apple Clang Hooks...\n";
   MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm18PassManagerBuilder25populateModulePassManagerERNS_6legacy15PassManagerBaseE"), (void *)new_pmb, (void **)&old_pmb);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder22buildO0DefaultPipelineENS_17OptimizationLevelEb"), (void *)new_bo0dp, (void **)&old_bo0dp);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder29buildPerModuleDefaultPipelineENS_17OptimizationLevelEb"), (void *)new_bpmdp, (void **)&old_bpmdp);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder34buildThinLTOPreLinkDefaultPipelineENS_17OptimizationLevelE"), (void *)new_btlpldp, (void **)&old_btlpldp);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder27buildThinLTODefaultPipelineENS_17OptimizationLevelEPKNS_18ModuleSummaryIndexE"), (void *)new_btldp, (void **)&old_btldp);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder23buildLTODefaultPipelineENS_17OptimizationLevelEPNS_18ModuleSummaryIndexE"), (void *)new_bldp, (void **)&old_bldp);
+  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder15parseModulePassERNS_11PassManagerINS_6ModuleENS_15AnalysisManagerIS2_JEEEJEEERKNS0_15PipelineElementE"), (void *)new_pmp, (void **)&old_pmp);
 }
