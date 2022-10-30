@@ -1,5 +1,5 @@
 # 花火 适配Xcode 14.0 和Apple Silicon Mac
-libsubstitute改为静态库形式使用，编译自[https://github.com/PoomSmart/substitute](https://github.com/PoomSmart/substitute)，编译了arm64和x86_64两种架构
+将使用substitute改为使用[Dobby](https://github.com/jmpews/Dobby)
 
 增加了New Pass Manager的Hook
 

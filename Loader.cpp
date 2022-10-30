@@ -1,5 +1,5 @@
 // For open-source license, please refer to [License](https://github.com/HikariObfuscator/Hikari/wiki/License).
-#include "substrate.h"
+#include "dobby.h"
 #include <llvm/Transforms/Obfuscation/Obfuscation.h>
 #include <llvm/IR/PassManager.h>
 #include <llvm/Passes/OptimizationLevel.h>
@@ -33,11 +33,10 @@ static Error new_pmp(ModulePassManager &MPM, int E) {
 static __attribute__((__constructor__)) void Inj3c73d(int argc, char* argv[]){
   char* executablePath=argv[0];
   //Initialize our own LLVM Library
-  MSImageRef exeImagemage = MSGetImageByName(executablePath);
   if (strstr(executablePath, "swift-frontend"))
     errs() << "Applying Apple SwiftC Hooks...\n";
   else
     errs() << "Applying Apple Clang Hooks...\n";
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm18PassManagerBuilder25populateModulePassManagerERNS_6legacy15PassManagerBaseE"), (void *)new_pmb, (void **)&old_pmb);
-  MSHookFunction(MSFindSymbol(exeImagemage, "__ZN4llvm11PassBuilder15parseModulePassERNS_11PassManagerINS_6ModuleENS_15AnalysisManagerIS2_JEEEJEEERKNS0_15PipelineElementE"), (void *)new_pmp, (void **)&old_pmp);
+  DobbyHook(DobbySymbolResolver(executablePath, "__ZN4llvm18PassManagerBuilder25populateModulePassManagerERNS_6legacy15PassManagerBaseE"), (dobby_dummy_func_t)new_pmb, (dobby_dummy_func_t *)&old_pmb);
+  DobbyHook(DobbySymbolResolver(executablePath, "__ZN4llvm11PassBuilder15parseModulePassERNS_11PassManagerINS_6ModuleENS_15AnalysisManagerIS2_JEEEJEEERKNS0_15PipelineElementE"), (dobby_dummy_func_t)new_pmp, (dobby_dummy_func_t *)&old_pmp);
 }

@@ -18,7 +18,7 @@ add_dependencies(LLVMHanabi
   LLVMHanabiDeps
   LLVMObfuscation
 )
-target_link_libraries(LLVMHanabiDeps PRIVATE LLVMCore LLVMSupport LLVMPasses ${CMAKE_CURRENT_LIST_DIR}/libsubstitute.a)
+target_link_libraries(LLVMHanabiDeps PRIVATE LLVMCore LLVMSupport LLVMPasses ${CMAKE_CURRENT_LIST_DIR}/libdobby.a)
 target_link_options(LLVMHanabiDeps PRIVATE -all_load -lobjc)
 
 target_link_libraries(LLVMHanabi PRIVATE LLVMObfuscation LLVMHanabiDeps)
