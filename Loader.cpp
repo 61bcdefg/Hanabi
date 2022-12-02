@@ -6,8 +6,9 @@
 #include <llvm/Config/abi-breaking.h>
 #include <string>
 #include <mach-o/dyld.h>
+#include <sys/sysctl.h>
 #if LLVM_VERSION_MAJOR != 14
-#warning "This fork of Naville's Hanabi only tested in Xcode 14.0, other versions of Xcode may have problems"
+#warning "This fork of Naville's Hanabi only tested in Xcode 14, other versions of Xcode may have problems"
 #endif
 #if LLVM_ENABLE_ABI_BREAKING_CHECKS==1
 #error "Configure LLVM with -DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF"
@@ -37,6 +38,12 @@ static __attribute__((__constructor__)) void Inj3c73d(int argc, char* argv[]){
     errs() << "Applying Apple SwiftC Hooks...\n";
   else
     errs() << "Applying Apple Clang Hooks...\n";
+#if defined(__x86_64__)
+  int ret = 0;
+  size_t size = sizeof(ret);
+  if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) != -1 && ret == 1)
+    errs() << "[Hanabi] Looks like you are currently running the process in Rosetta 2 mode, which will prevent DobbyHook from working.\nPlease close it.\n";
+#endif
   DobbyHook(DobbySymbolResolver(executablePath, "__ZN4llvm18PassManagerBuilder25populateModulePassManagerERNS_6legacy15PassManagerBaseE"), (dobby_dummy_func_t)new_pmb, (dobby_dummy_func_t *)&old_pmb);
   DobbyHook(DobbySymbolResolver(executablePath, "__ZN4llvm11PassBuilder15parseModulePassERNS_11PassManagerINS_6ModuleENS_15AnalysisManagerIS2_JEEEJEEERKNS0_15PipelineElementE"), (dobby_dummy_func_t)new_pmp, (dobby_dummy_func_t *)&old_pmp);
 }
