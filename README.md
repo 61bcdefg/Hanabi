@@ -28,18 +28,16 @@ Due to its hackish nature (Which is why I don't want to do this in the first pla
 
 ## Build
 - ``cmake $(LLVM_SOURCE_PATH) -DCMAKE_BUILD_TYPE=Release -DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF -G Ninja``
-- ``ninja LLVMHanabi LLVMHanabiForSwift``
+- ``ninja LLVMHanabi``
 - Copy ``$(LLVM_BUILD_PATH)/lib/libLLVMHanabiDeps.dylib`` to ``/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/``
 - Copy ``$(LLVM_BUILD_PATH)/lib/libLLVMHanabi.dylib`` to ``/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/``
-- Copy ``$(LLVM_BUILD_PATH)/lib/libLLVMHanabiForSwiftDeps.dylib`` to ``/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/``
-- Copy ``$(LLVM_BUILD_PATH)/lib/libLLVMHanabiForSwift.dylib`` to ``/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/``
 
 # Patching
 
 You need to build ``https://github.com/alexzielenski/optool`` and put it in your $PATH, then you need to patch two libraries into Clang/SwiftC.
 **!!!ORDER IS VERY IMPORTANT!!!**
 - ``sudo optool install -c load -p @executable_path/libLLVMHanabi.dylib -t /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang``
-- ``sudo optool install -c load -p @executable_path/libLLVMHanabiForSwift.dylib -t /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend``
+- ``sudo optool install -c load -p @executable_path/libLLVMHanabi.dylib -t /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend``
 - ``sudo codesign -fs - /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang``
 - ``sudo codesign -fs - /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend``
 
