@@ -2,15 +2,11 @@
 #include "dobby.h"
 #include <llvm/Transforms/Obfuscation/Obfuscation.h>
 #include <llvm/IR/PassManager.h>
-#include <llvm/Passes/OptimizationLevel.h>
 #include <llvm/Config/abi-breaking.h>
 #include <string>
 #include <mach-o/dyld.h>
 #include <sys/sysctl.h>
-#if LLVM_VERSION_MAJOR != 14
-#warning "This fork of Naville's Hanabi only tested in Xcode 14, other versions of Xcode may have problems"
-#endif
-#if LLVM_ENABLE_ABI_BREAKING_CHECKS==1
+#if LLVM_ENABLE_ABI_BREAKING_CHECKS
 #error "Configure LLVM with -DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF"
 #endif
 using namespace std;
