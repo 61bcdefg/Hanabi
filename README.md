@@ -3,8 +3,7 @@
 
 增加了New Pass Manager的Hook
 
-LLVM Pass可以从[https://github.com/NeHyci/Hikari-LLVM15](https://github.com/NeHyci/Hikari-LLVM15)获取，移植到[swift llvm 5.7](https://github.com/apple/llvm-project/tree/swift/release/5.7)再配合这个仓库编译即可
-
+LLVM Pass可以从[https://github.com/NeHyci/Hikari-LLVM15-Core](https://github.com/NeHyci/Hikari-LLVM15-Core) [https://github.com/NeHyci/Hikari-LLVM15-Headers](https://github.com/NeHyci/Hikari-LLVM15-Headers)获取，移植到对应的swift llvm再配合这个仓库编译即可
 # 花火
 Hassle-free Obfuscator-Enabled Apple Clang without any sort of compromise.
 
