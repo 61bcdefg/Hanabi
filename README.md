@@ -3,7 +3,7 @@
 
 增加了New Pass Manager的Hook
 
-LLVM Pass可以从[https://github.com/NeHyci/Hikari-LLVM15-Core](https://github.com/NeHyci/Hikari-LLVM15-Core) [https://github.com/NeHyci/Hikari-LLVM15-Headers](https://github.com/NeHyci/Hikari-LLVM15-Headers)获取，移植到对应的swift llvm再配合这个仓库编译即可
+LLVM Pass可以从[https://github.com/61bcdefg/Hikari-LLVM15-Core](https://github.com/61bcdefg/Hikari-LLVM15-Core) [https://github.com/61bcdefg/Hikari-LLVM15-Headers](https://github.com/61bcdefg/Hikari-LLVM15-Headers)获取，移植到对应的swift llvm再配合这个仓库编译即可
 # 花火
 Hassle-free Obfuscator-Enabled Apple Clang without any sort of compromise.
 
@@ -22,7 +22,7 @@ Due to its hackish nature (Which is why I don't want to do this in the first pla
 - ``${LLVM_BUILD_PATH}`` The path you prepare to build in. Note that you need a seperate folder and must not reuse existing build for upstream Hikari
 
 ## Obtaining Source
-- ``git clone https://github.com/NeHyci/Hanabi.git $(LLVM_SOURCE_PATH)/projects/``
+- ``git clone https://github.com/61bcdefg/Hanabi.git $(LLVM_SOURCE_PATH)/projects/``
 - Under ``$(LLVM_SOURCE_PATH)``, run ``git submodule update --init --recursive --remote`` to make sure submodules are fully updated
 
 ## Build
