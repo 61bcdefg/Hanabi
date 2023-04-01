@@ -21,15 +21,18 @@ static void new_pmb(void *dis, legacy::PassManagerBase &MPM) {
   old_pmb(dis, MPM);
 }
 
-static ModulePassManager buildObfuscationPipeline(void) {
-  ModulePassManager MPM;
+ModulePassManager (*old_bo0dp)(void *Level, bool LTOPreLink);
+static ModulePassManager new_bo0dp(void *Level, bool LTOPreLink) {
+  ModulePassManager MPM = old_bo0dp(Level, LTOPreLink);
   MPM.addPass(ObfuscationPass());
   return MPM;
 }
-Error (*old_pmp)(ModulePassManager &MPM, int E);
-static Error new_pmp(ModulePassManager &MPM, int E) {
-  MPM.addPass(buildObfuscationPipeline());
-  return old_pmp(MPM, E);
+
+ModulePassManager (*old_bpmdp)(void *Level, bool LTOPreLink);
+static ModulePassManager new_bpmdp(void *Level, bool LTOPreLink) {
+  ModulePassManager MPM = old_bpmdp(Level, LTOPreLink);
+  MPM.addPass(ObfuscationPass());
+  return MPM;
 }
 
 static __attribute__((__constructor__)) void Inj3c73d(int argc, char *argv[]) {
@@ -54,9 +57,13 @@ static __attribute__((__constructor__)) void Inj3c73d(int argc, char *argv[]) {
                 "6legacy15PassManagerBaseE"),
             (dobby_dummy_func_t)new_pmb, (dobby_dummy_func_t *)&old_pmb);
   DobbyHook(
-      DobbySymbolResolver(
-          executablePath,
-          "__ZN4llvm11PassBuilder15parseModulePassERNS_11PassManagerINS_"
-          "6ModuleENS_15AnalysisManagerIS2_JEEEJEEERKNS0_15PipelineElementE"),
-      (dobby_dummy_func_t)new_pmp, (dobby_dummy_func_t *)&old_pmp);
+      DobbySymbolResolver(executablePath,
+                          "__ZN4llvm11PassBuilder22buildO0DefaultPipelineENS_"
+                          "17OptimizationLevelEb"),
+      (dobby_dummy_func_t)new_bo0dp, (dobby_dummy_func_t *)&old_bo0dp);
+  DobbyHook(DobbySymbolResolver(
+                executablePath,
+                "__ZN4llvm11PassBuilder29buildPerModuleDefaultPipelineENS_"
+                "17OptimizationLevelEb"),
+            (dobby_dummy_func_t)new_bpmdp, (dobby_dummy_func_t *)&old_bpmdp);
 }
