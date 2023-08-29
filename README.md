@@ -1,9 +1,16 @@
-# 花火 适配Xcode 14.0 和Apple Silicon Mac
+# 花火 适配Xcode 14和Apple Silicon Mac
 将使用substitute改为使用[Dobby](https://github.com/jmpews/Dobby)
 
 增加了New Pass Manager的Hook
 
 LLVM Pass可以从[https://github.com/61bcdefg/Hikari-LLVM15-Core](https://github.com/61bcdefg/Hikari-LLVM15-Core) [https://github.com/61bcdefg/Hikari-LLVM15-Headers](https://github.com/61bcdefg/Hikari-LLVM15-Headers)获取，移植到对应的swift llvm再配合这个仓库编译即可
+
+## 已知问题
+
+### ld: Assertion failed: (dylib != NULL), function classicOrdinalForProxy, file LinkEditClassic.hpp, line 495.
+
+解决方法： 在Other C Flags加上`-fno-objc-msgsend-selector-stubs`
+
 # 花火
 Hassle-free Obfuscator-Enabled Apple Clang without any sort of compromise.
 
