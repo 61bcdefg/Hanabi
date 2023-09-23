@@ -1,4 +1,4 @@
-# 花火 适配Xcode 14和Apple Silicon Mac
+# 花火 适配Xcode 14/15和Apple Silicon Mac
 将使用substitute改为使用[Dobby](https://github.com/jmpews/Dobby)
 
 增加了New Pass Manager的Hook
