@@ -3,7 +3,7 @@
 
 增加了New Pass Manager的Hook
 
-LLVM Pass可以从[https://github.com/61bcdefg/Hikari-LLVM15-Core](https://github.com/61bcdefg/Hikari-LLVM15-Core) [https://github.com/61bcdefg/Hikari-LLVM15-Headers](https://github.com/61bcdefg/Hikari-LLVM15-Headers)获取，移植到对应的swift llvm再配合这个仓库编译即可
+LLVM Pass可以从[https://github.com/61bcdefg/Hikari-LLVM15-Core](https://github.com/61bcdefg/Hikari-LLVM15-Core) [https://github.com/61bcdefg/Hikari-LLVM15-Headers](https://github.com/61bcdefg/Hikari-LLVM15-Headers)获取，切换到`hanabi`分支，移植到对应的swift llvm再配合这个仓库编译即可
 
 ## 已知问题
 
