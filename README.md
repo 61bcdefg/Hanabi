@@ -11,6 +11,10 @@ LLVM Pass可以从[https://github.com/61bcdefg/Hikari-LLVM15-Core](https://githu
 
 解决方法： 在Other C Flags加上`-fno-objc-msgsend-selector-stubs`
 
+### IndirectBranch混淆无效
+
+解决方法： 在Other C Flags加上`-mllvm -aarch64-enable-atomic-cfg-tidy=false`
+
 # 花火
 Hassle-free Obfuscator-Enabled Apple Clang without any sort of compromise.
 
