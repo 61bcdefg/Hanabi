@@ -38,7 +38,7 @@ static ModulePassManager new_bpmdp(void *Level, bool LTOPreLink) {
 static __attribute__((__constructor__)) void Inj3c73d(int argc, char *argv[]) {
   char *executablePath = argv[0];
   // Initialize our own LLVM Library
-  if (strstr(executablePath, "swift-frontend"))
+  if (strstr(executablePath, "swift"))
     errs() << "Applying Apple SwiftC Hooks...\n";
   else
     errs() << "Applying Apple Clang Hooks...\n";
